@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Rating } from '../ratings/entities/rating.entity';
+import { RatingsService } from '../ratings/ratings.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './entities/recipe.entity';
@@ -9,26 +11,49 @@ import { Recipe } from './entities/recipe.entity';
 export class RecipesService {
   constructor(
     @InjectRepository(Recipe)
-    private recipeRepository: Repository<Recipe>,
+    private readonly recipeRepository: Repository<Recipe>,
+
+    @Inject(forwardRef(() => RatingsService))
+    private readonly ratingsService: RatingsService,
   ) {}
 
-  create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
+  async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
     return this.recipeRepository.save(createRecipeDto);
   }
 
-  findAll() {
-    return `This action returns all recipes`;
+  async findAll(): Promise<Recipe[]> {
+    return this.recipeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recipe`;
+  async findOne(id: string): Promise<Recipe> {
+    return this.recipeRepository.findOneBy({ id });
   }
 
-  update(id: number, updateRecipeDto: UpdateRecipeDto) {
-    return `This action updates a #${id} recipe`;
+  async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<Recipe> {
+    return this.recipeRepository.save({ id, ...updateRecipeDto });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recipe`;
+  async remove(id: string): Promise<void> {
+    this.recipeRepository.delete(id);
+  }
+
+  async findBySlug(slug: string): Promise<Recipe> {
+    return this.recipeRepository.findOne({ where: { slug } });
+  }
+
+  async calculateRatings(id: string, ratings: Rating[]): Promise<Recipe> {
+    const recipe = await this.findOne(id);
+
+    const sumRating = ratings.reduce((acc, entry) => {
+      return acc + entry.rating;
+    }, 0);
+    const avgRating = sumRating / ratings.length;
+
+    await this.recipeRepository.save({
+      ...recipe,
+      rating: avgRating,
+    });
+
+    return this.findOne(id);
   }
 }

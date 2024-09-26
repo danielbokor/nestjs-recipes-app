@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CommonModule } from './common/common.module';
+import { Rating } from './ratings/entities/rating.entity';
 import { RatingsModule } from './ratings/ratings.module';
 import { Recipe } from './recipes/entities/recipe.entity';
 import { RecipesModule } from './recipes/recipes.module';
@@ -21,13 +23,14 @@ import { RecipesModule } from './recipes/recipes.module';
         username: configService.get<string>('DATABASE_USER'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [Recipe],
+        entities: [Recipe, Rating],
         synchronize: true, // Ensure this is set to false for migrations
         // migrations: [__dirname + '/../migrations/*.{ts,js}'],
       }),
       inject: [ConfigService],
     }),
     RecipesModule,
+    CommonModule,
     RatingsModule,
   ],
   controllers: [AppController],

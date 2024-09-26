@@ -1,6 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
+import { ContextInterceptor } from './common/interceptors/context/context.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,6 +14,10 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+  app.useGlobalInterceptors(new ContextInterceptor());
 
   await app.listen(3000);
 }

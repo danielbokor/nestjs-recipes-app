@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Rating } from '../../ratings/entities/rating.entity';
 
 @Entity('recipes')
 export class Recipe {
@@ -30,6 +32,9 @@ export class Recipe {
   @Column()
   directions: string;
 
-  @Column({ type: 'int', nullable: true })
-  ratings: number;
+  @Column({ type: 'numeric', precision: 4, scale: 2, nullable: true })
+  rating: number;
+
+  @OneToMany(() => Rating, (rating) => rating.recipe)
+  ratings: Rating[];
 }
