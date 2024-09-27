@@ -64,6 +64,7 @@ export class RecipesService {
     const sumRating = ratings.reduce((acc, entry) => {
       return acc + entry.rating;
     }, 0);
+
     const avgRating = sumRating / ratings.length;
 
     await this.recipeRepository.save({

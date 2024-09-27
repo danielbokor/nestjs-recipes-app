@@ -24,9 +24,7 @@ export class RatingsService {
 
   async findByRecipe(recipe: Recipe): Promise<Rating[]> {
     return this.ratingRepository.find({
-      where: {
-        recipe: recipe,
-      },
+      where: { recipe: { id: recipe.id } },
     });
   }
 }

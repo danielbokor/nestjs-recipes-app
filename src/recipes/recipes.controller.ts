@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -17,11 +16,14 @@ import { extname, join } from 'path';
 import { CreateRatingDto } from '../ratings/dto/create-rating.dto';
 import { RatingsService } from '../ratings/ratings.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { FindOneParamsDto } from './dto/find-one-params.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './entities/recipe.entity';
+import { DecodeInterceptor } from './interceptors/decode-interceptor/decode-interceptor.interceptor';
 import { RecipesService } from './recipes.service';
 
 @Controller('recipes')
+@UseInterceptors(DecodeInterceptor)
 export class RecipesController {
   constructor(
     private readonly recipesService: RecipesService,
@@ -59,19 +61,23 @@ export class RecipesController {
 
   @Post(':id/ratings')
   async rateRecipe(
-    @Param('id') id: string,
+    @Param() { id }: FindOneParamsDto,
     @Body() createRatingDto: CreateRatingDto,
-  ): Promise<Recipe> {
+  ) {
     const recipe = await this.recipesService.findOne(id);
-
-    if (!recipe) {
-      throw new NotFoundException('Recipe not found');
-    }
 
     await this.ratingsService.create(recipe, createRatingDto);
     const ratings = await this.ratingsService.findByRecipe(recipe);
 
     return this.recipesService.calculateRatings(id, ratings);
+  }
+
+  @Get(':id/ratings')
+  async getRatings(@Param() { id }: FindOneParamsDto) {
+    const recipe = await this.recipesService.findOne(id);
+    const ratings = await this.ratingsService.findByRecipe(recipe);
+
+    return ratings;
   }
 
   @Get()
@@ -85,12 +91,8 @@ export class RecipesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Recipe> {
+  async findOne(@Param() { id }: FindOneParamsDto): Promise<Recipe> {
     const recipe = await this.recipesService.findOne(id);
-
-    if (!recipe) {
-      throw new NotFoundException('Recipe not found');
-    }
 
     const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
     return { ...recipe, image: imageUrl };
@@ -112,15 +114,11 @@ export class RecipesController {
     }),
   )
   async update(
-    @Param('id') id: string,
+    @Param() { id }: FindOneParamsDto,
     @Body() updateRecipeDto: UpdateRecipeDto,
     @UploadedFile() image: Express.Multer.File,
   ): Promise<Recipe> {
     const recipe = await this.recipesService.findOne(id);
-
-    if (!recipe) {
-      throw new NotFoundException('Recipe not found');
-    }
 
     let imageFilename = recipe.image;
 
@@ -146,12 +144,8 @@ export class RecipesController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param() { id }: FindOneParamsDto): Promise<void> {
     const recipe = await this.recipesService.findOne(id);
-
-    if (!recipe) {
-      throw new NotFoundException('Recipe not found');
-    }
 
     const imagePath = join(__dirname, '..', '..', 'uploads', recipe.image);
     try {
