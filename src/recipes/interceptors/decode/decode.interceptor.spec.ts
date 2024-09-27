@@ -1,4 +1,4 @@
-import { DecodeInterceptorInterceptor } from './decode-interceptor.interceptor';
+import { DecodeInterceptorInterceptor } from './decode.interceptor';
 
 describe('DecodeInterceptorInterceptor', () => {
   it('should be defined', () => {

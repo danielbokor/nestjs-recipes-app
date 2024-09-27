@@ -20,12 +20,14 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { FindOneParamsDto } from './dto/find-one-params.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './entities/recipe.entity';
-import { DecodeInterceptor } from './interceptors/decode-interceptor/decode-interceptor.interceptor';
+import { DecodeInterceptor } from './interceptors/decode/decode.interceptor';
+import { ImageInterceptor } from './interceptors/image/image.interceptor';
 import { RecipesService } from './recipes.service';
 
 @Controller('recipes')
 @ApiTags('recipes')
 @UseInterceptors(DecodeInterceptor)
+@UseInterceptors(ImageInterceptor)
 export class RecipesController {
   constructor(
     private readonly recipesService: RecipesService,
@@ -69,13 +71,7 @@ export class RecipesController {
     @UploadedFile() image: Express.Multer.File,
   ): Promise<Recipe> {
     const imageFilename = image.filename;
-    const recipe = await this.recipesService.create(
-      createRecipeDto,
-      imageFilename,
-    );
-
-    const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
-    return { ...recipe, image: imageUrl };
+    return this.recipesService.create(createRecipeDto, imageFilename);
   }
 
   @Post(':id/ratings')
@@ -88,31 +84,17 @@ export class RecipesController {
     await this.ratingsService.create(recipe, createRatingDto);
     const ratings = await this.ratingsService.findByRecipe(recipe);
 
-    const updatedRecipe = await this.recipesService.calculateRatings(
-      id,
-      ratings,
-    );
-
-    const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
-    return { ...updatedRecipe, image: imageUrl };
+    return this.recipesService.calculateRatings(id, ratings);
   }
 
   @Get()
   async findAll(): Promise<Recipe[]> {
-    const recipes = await this.recipesService.findAll();
-
-    return recipes.map((recipe) => {
-      const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
-      return { ...recipe, image: imageUrl };
-    });
+    return this.recipesService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param() { id }: FindOneParamsDto): Promise<Recipe> {
-    const recipe = await this.recipesService.findOne(id);
-
-    const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
-    return { ...recipe, image: imageUrl };
+    return this.recipesService.findOne(id);
   }
 
   @Put(':id')
@@ -167,14 +149,7 @@ export class RecipesController {
       }
     }
 
-    const updatedRecipe = await this.recipesService.update(
-      id,
-      updateRecipeDto,
-      imageFilename,
-    );
-
-    const imageUrl = `http://localhost:3000/uploads/${updatedRecipe.image}`;
-    return { ...updatedRecipe, image: imageUrl };
+    return this.recipesService.update(id, updateRecipeDto, imageFilename);
   }
 
   @Delete(':id')
