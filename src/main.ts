@@ -1,6 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
+import { existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { ContextInterceptor } from './common/interceptors/context/context.interceptor';
 
@@ -14,6 +16,11 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  const uploadsDir = join(__dirname, '..', 'uploads');
+  if (!existsSync(uploadsDir)) {
+    mkdirSync(uploadsDir);
+  }
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 

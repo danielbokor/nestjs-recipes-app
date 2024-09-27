@@ -17,8 +17,16 @@ export class RecipesService {
     private readonly ratingsService: RatingsService,
   ) {}
 
-  async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-    return this.recipeRepository.save(createRecipeDto);
+  async create(
+    createRecipeDto: CreateRecipeDto,
+    imageFilename: string,
+  ): Promise<Recipe> {
+    const recipe = this.recipeRepository.create({
+      ...createRecipeDto,
+      image: imageFilename,
+    });
+
+    return this.recipeRepository.save(recipe);
   }
 
   async findAll(): Promise<Recipe[]> {
@@ -29,8 +37,17 @@ export class RecipesService {
     return this.recipeRepository.findOneBy({ id });
   }
 
-  async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<Recipe> {
-    return this.recipeRepository.save({ id, ...updateRecipeDto });
+  async update(
+    id: string,
+    updateRecipeDto: UpdateRecipeDto,
+    imageFilename: string,
+  ): Promise<Recipe> {
+    await this.recipeRepository.save({
+      id,
+      ...updateRecipeDto,
+      image: imageFilename,
+    });
+    return this.findOne(id);
   }
 
   async remove(id: string): Promise<void> {

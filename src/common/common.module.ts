@@ -6,7 +6,7 @@ import { MyRequestContext } from './models/my-request-context/my-request-context
   imports: [
     RequestContextModule.forRoot({
       contextClass: MyRequestContext,
-      // isGlobal: true,
+      isGlobal: true,
     }),
   ],
 })

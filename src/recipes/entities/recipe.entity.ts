@@ -32,6 +32,9 @@ export class Recipe {
   @Column()
   directions: string;
 
+  @Column()
+  image: string;
+
   @Column({ type: 'numeric', precision: 4, scale: 2, nullable: true })
   rating: number;
 

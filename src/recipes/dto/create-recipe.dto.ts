@@ -3,18 +3,18 @@ import { IsSlugUnique } from '../validators/is-slug-unique.validator';
 
 export class CreateRecipeDto {
   @IsString()
-  name: string;
+  readonly name: string;
 
   @IsString()
   @IsSlugUnique()
-  slug: string;
+  readonly slug: string;
 
   @IsString()
-  description: string;
+  readonly description: string;
 
   @IsString()
-  ingredients: string;
+  readonly ingredients: string;
 
   @IsString()
-  directions: string;
+  readonly directions: string;
 }
