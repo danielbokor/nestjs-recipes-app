@@ -1,3 +1,4 @@
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -35,9 +36,11 @@ export class Recipe {
   @Column()
   image: string;
 
+  @ApiProperty({ type: 'string', format: 'float' })
   @Column({ type: 'numeric', precision: 4, scale: 2, nullable: true })
   rating: number;
 
+  @ApiHideProperty()
   @OneToMany(() => Rating, (rating) => rating.recipe)
   ratings: Rating[];
 }

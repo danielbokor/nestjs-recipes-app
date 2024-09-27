@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
@@ -25,6 +26,16 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.useGlobalInterceptors(new ContextInterceptor());
+
+  const options = new DocumentBuilder()
+    .setTitle('Recipes API')
+    .setDescription('Recipes API')
+    .setVersion('0.0.1')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

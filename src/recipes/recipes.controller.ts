@@ -10,6 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { unlinkSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
@@ -23,6 +24,7 @@ import { DecodeInterceptor } from './interceptors/decode-interceptor/decode-inte
 import { RecipesService } from './recipes.service';
 
 @Controller('recipes')
+@ApiTags('recipes')
 @UseInterceptors(DecodeInterceptor)
 export class RecipesController {
   constructor(
@@ -31,6 +33,23 @@ export class RecipesController {
   ) {}
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        slug: { type: 'string' },
+        description: { type: 'string' },
+        ingredients: { type: 'string' },
+        directions: { type: 'string' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -63,21 +82,19 @@ export class RecipesController {
   async rateRecipe(
     @Param() { id }: FindOneParamsDto,
     @Body() createRatingDto: CreateRatingDto,
-  ) {
+  ): Promise<Recipe> {
     const recipe = await this.recipesService.findOne(id);
 
     await this.ratingsService.create(recipe, createRatingDto);
     const ratings = await this.ratingsService.findByRecipe(recipe);
 
-    return this.recipesService.calculateRatings(id, ratings);
-  }
+    const updatedRecipe = await this.recipesService.calculateRatings(
+      id,
+      ratings,
+    );
 
-  @Get(':id/ratings')
-  async getRatings(@Param() { id }: FindOneParamsDto) {
-    const recipe = await this.recipesService.findOne(id);
-    const ratings = await this.ratingsService.findByRecipe(recipe);
-
-    return ratings;
+    const imageUrl = `http://localhost:3000/uploads/${recipe.image}`;
+    return { ...updatedRecipe, image: imageUrl };
   }
 
   @Get()
@@ -99,6 +116,23 @@ export class RecipesController {
   }
 
   @Put(':id')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        slug: { type: 'string' },
+        description: { type: 'string' },
+        ingredients: { type: 'string' },
+        directions: { type: 'string' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
