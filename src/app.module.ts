@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +8,7 @@ import { ExportRatingsCommand } from './commands/export-ratings-command/export-r
 import { ExportRecipesCommand } from './commands/export-recipes-command/export-recipes-command';
 import { SeedDataCommand } from './commands/seed-data-command/seed-data-command';
 import { CommonModule } from './common/common.module';
+import { RatingsDataImportService } from './data-import/ratings-data-import/ratings-data-import.service';
 import { Rating } from './ratings/entities/rating.entity';
 import { RatingsModule } from './ratings/ratings.module';
 import { Recipe } from './recipes/entities/recipe.entity';
@@ -38,11 +39,17 @@ import { RecipesModule } from './recipes/recipes.module';
       }),
       inject: [ConfigService],
     }),
-    RecipesModule,
-    CommonModule,
-    RatingsModule,
+    TypeOrmModule.forFeature([Rating, Recipe]),
+    forwardRef(() => RecipesModule),
+    forwardRef(() => CommonModule),
+    forwardRef(() => RatingsModule),
   ],
   controllers: [],
-  providers: [ExportRatingsCommand, ExportRecipesCommand, SeedDataCommand],
+  providers: [
+    ExportRatingsCommand,
+    ExportRecipesCommand,
+    SeedDataCommand,
+    RatingsDataImportService,
+  ],
 })
 export class AppModule {}

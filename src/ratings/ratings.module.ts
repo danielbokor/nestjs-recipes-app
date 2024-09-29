@@ -2,7 +2,6 @@ import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from '../common/common.module';
 import { RatingsDataExportService } from '../data-export/ratings-data-export/ratings-data-export.service';
-import { RatingsDataImportService } from '../data-import/ratings-data-import/ratings-data-import.service';
 import { RecipesModule } from '../recipes/recipes.module';
 import { Rating } from './entities/rating.entity';
 import { RatingsService } from './ratings.service';
@@ -16,8 +15,8 @@ import { RatingsService } from './ratings.service';
   providers: [
     RatingsService,
     RatingsDataExportService,
-    RatingsDataImportService,
+    // RatingsDataImportService,
   ],
-  exports: [RatingsService, RatingsDataExportService, RatingsDataImportService],
+  exports: [RatingsService, RatingsDataExportService],
 })
 export class RatingsModule {}
