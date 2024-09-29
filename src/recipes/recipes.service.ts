@@ -29,8 +29,29 @@ export class RecipesService {
     return this.recipeRepository.save(recipe);
   }
 
-  async findAll(): Promise<Recipe[]> {
-    return this.recipeRepository.find();
+  async findAll(
+    page?: number,
+    limit?: number,
+  ): Promise<
+    Recipe[] | { data: Recipe[]; total: number; page: number; limit: number }
+  > {
+    if (!page || !limit) {
+      return this.recipeRepository.find();
+    }
+
+    const offset = (page - 1) * limit;
+
+    const [recipes, total] = await this.recipeRepository.findAndCount({
+      skip: offset,
+      take: limit,
+    });
+
+    return {
+      data: recipes,
+      total,
+      page,
+      limit,
+    };
   }
 
   async findOne(id: string): Promise<Recipe> {

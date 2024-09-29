@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -23,6 +24,7 @@ import {
 import { unlinkSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { PaginationDto } from '../common/dto/pagination.dto';
 import { CreateRatingDto } from '../ratings/dto/create-rating.dto';
 import { RatingsService } from '../ratings/ratings.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -106,8 +108,8 @@ export class RecipesController {
   }
 
   @Get()
-  async findAll(): Promise<Recipe[]> {
-    return this.recipesService.findAll();
+  async findAll(@Query() { limit, page }: PaginationDto) {
+    return this.recipesService.findAll(page, limit);
   }
 
   @Get(':id')

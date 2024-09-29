@@ -29,6 +29,18 @@ export class ImageInterceptor implements NestInterceptor {
           });
         }
 
+        if (data.hasOwnProperty('data') && Array.isArray(data.data)) {
+          return {
+            ...data,
+            data: data.data.map((item) => {
+              if (item.hasOwnProperty('image')) {
+                item.image = `http://localhost:3000/uploads/${item.image}`;
+              }
+              return item;
+            }),
+          };
+        }
+
         return data;
       }),
     );
