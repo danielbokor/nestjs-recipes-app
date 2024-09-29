@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -10,7 +12,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiConsumes,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { unlinkSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
@@ -52,6 +61,9 @@ export class RecipesController {
       },
     },
   })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -75,6 +87,12 @@ export class RecipesController {
   }
 
   @Post(':id/ratings')
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
   async rateRecipe(
     @Param() { id }: FindOneParamsDto,
     @Body() createRatingDto: CreateRatingDto,
@@ -93,6 +111,9 @@ export class RecipesController {
   }
 
   @Get(':id')
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
   async findOne(@Param() { id }: FindOneParamsDto): Promise<Recipe> {
     return this.recipesService.findOne(id);
   }
@@ -114,6 +135,12 @@ export class RecipesController {
         },
       },
     },
+  })
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
   })
   @UseInterceptors(
     FileInterceptor('image', {
@@ -153,6 +180,13 @@ export class RecipesController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({
+    description: 'Recipe deleted.',
+  })
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
   async remove(@Param() { id }: FindOneParamsDto): Promise<void> {
     const recipe = await this.recipesService.findOne(id);
 
