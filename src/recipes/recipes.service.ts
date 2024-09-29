@@ -19,7 +19,7 @@ export class RecipesService {
 
   async create(
     createRecipeDto: CreateRecipeDto,
-    imageFilename: string,
+    imageFilename?: string,
   ): Promise<Recipe> {
     const recipe = this.recipeRepository.create({
       ...createRecipeDto,

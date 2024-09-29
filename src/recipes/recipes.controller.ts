@@ -82,9 +82,9 @@ export class RecipesController {
   )
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() image?: Express.Multer.File,
   ): Promise<Recipe> {
-    const imageFilename = image.filename;
+    const imageFilename = image && image.filename;
     return this.recipesService.create(createRecipeDto, imageFilename);
   }
 
@@ -170,11 +170,19 @@ export class RecipesController {
     if (image) {
       imageFilename = image.filename;
 
-      const oldImagePath = join(__dirname, '..', '..', 'uploads', recipe.image);
-      try {
-        unlinkSync(oldImagePath);
-      } catch (error) {
-        console.warn('Error deleting old image:', error.message);
+      if (recipe.image) {
+        const oldImagePath = join(
+          __dirname,
+          '..',
+          '..',
+          'uploads',
+          recipe.image,
+        );
+        try {
+          unlinkSync(oldImagePath);
+        } catch (error) {
+          console.warn('Error deleting old image:', error.message);
+        }
       }
     }
 

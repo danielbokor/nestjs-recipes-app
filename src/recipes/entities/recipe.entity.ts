@@ -33,7 +33,9 @@ export class Recipe {
   @Column()
   directions: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   image: string;
 
   @ApiProperty({ type: 'string', format: 'float' })

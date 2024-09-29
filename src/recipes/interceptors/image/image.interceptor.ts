@@ -16,13 +16,13 @@ export class ImageInterceptor implements NestInterceptor {
           return data;
         }
 
-        if (data.hasOwnProperty('image')) {
+        if (data.hasOwnProperty('image') && data.image) {
           data.image = `http://localhost:3000/uploads/${data.image}`;
         }
 
         if (Array.isArray(data)) {
           return data.map((item) => {
-            if (item.hasOwnProperty('image')) {
+            if (item.hasOwnProperty('image') && item.image) {
               item.image = `http://localhost:3000/uploads/${item.image}`;
             }
             return item;
@@ -33,7 +33,7 @@ export class ImageInterceptor implements NestInterceptor {
           return {
             ...data,
             data: data.data.map((item) => {
-              if (item.hasOwnProperty('image')) {
+              if (item.hasOwnProperty('image') && item.image) {
                 item.image = `http://localhost:3000/uploads/${item.image}`;
               }
               return item;
