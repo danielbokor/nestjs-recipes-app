@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommandRunnerModule } from 'nest-commander';
 import { join } from 'path';
+import { ExportRatingsCommand } from './commands/export-ratings-command/export-ratings-command';
+import { ExportRecipesCommand } from './commands/export-recipes-command/export-recipes-command';
+import { SeedDataCommand } from './commands/seed-data-command/seed-data-command';
 import { CommonModule } from './common/common.module';
 import { Rating } from './ratings/entities/rating.entity';
 import { RatingsModule } from './ratings/ratings.module';
@@ -11,6 +15,7 @@ import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
   imports: [
+    CommandRunnerModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -38,6 +43,6 @@ import { RecipesModule } from './recipes/recipes.module';
     RatingsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [ExportRatingsCommand, ExportRecipesCommand, SeedDataCommand],
 })
 export class AppModule {}

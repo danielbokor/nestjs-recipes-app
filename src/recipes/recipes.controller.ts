@@ -26,6 +26,7 @@ import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { CreateRatingDto } from '../ratings/dto/create-rating.dto';
+import { Rating } from '../ratings/entities/rating.entity';
 import { RatingsService } from '../ratings/ratings.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { FindOneParamsDto } from './dto/find-one-params.dto';
@@ -105,6 +106,16 @@ export class RecipesController {
     const ratings = await this.ratingsService.findByRecipe(recipe);
 
     return this.recipesService.calculateRatings(id, ratings);
+  }
+
+  @Get(':id/ratings')
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
+  async getRecipeRatings(@Param() { id }: FindOneParamsDto): Promise<Rating[]> {
+    const recipe = await this.recipesService.findOne(id);
+
+    return this.ratingsService.findByRecipe(recipe);
   }
 
   @Get()

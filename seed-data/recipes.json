@@ -1,0 +1,134 @@
+[
+  {
+    "id": "7db6e96c-1a14-4186-bbc3-b9ef16d74ee2",
+    "name": "Beef Stew",
+    "slug": "beef-stew",
+    "createdAt": "2024-09-29T07:18:54.695Z",
+    "description": "A hearty beef stew filled with tender chunks of beef, carrots, potatoes, and celery.",
+    "ingredients": "1 lb beef stew meat\\\\n3 carrots\\\\n4 potatoes\\\\n2 celery stalks\\\\n2 cups beef broth\\\\nSalt and pepper",
+    "directions": "In a large pot, brown the beef stew meat. Add vegetables and beef broth. Simmer for 1-2 hours until meat is tender. Season with salt and pepper to taste. Serve hot.",
+    "image": "a.8397277e724c4.bd6ac8e6fca2.webp",
+    "rating": "7.75"
+  },
+  {
+    "id": "9309c3ed-9498-4227-9cf5-9e4731378c2a",
+    "name": "Caesar Salad with Grilled Chicken",
+    "slug": "caesar-salad-with-grilled-chicken",
+    "createdAt": "2024-09-29T07:20:10.621Z",
+    "description": "A fresh Caesar salad with crisp romaine lettuce, grilled chicken, and Caesar dressing.",
+    "ingredients": "1 head romaine lettuce\\n1/4 cup grated Parmesan cheese\\n1/4 cup Caesar dressing\\n1 chicken breast\\n1 cup croutons",
+    "directions": "Grill chicken breast until fully cooked. Chop romaine lettuce and place in a large bowl. Add croutons, Parmesan cheese, and Caesar dressing. Top with sliced grilled chicken. Toss and serve.",
+    "image": "d.a05fd55ce45d3.4cf5118fb2d8.webp",
+    "rating": "9.00"
+  },
+  {
+    "id": "6039d24c-625d-4de9-8f5f-a95ef5dfe629",
+    "name": "Mushroom Risotto",
+    "slug": "mushroom-risotto",
+    "createdAt": "2024-09-29T07:55:59.108Z",
+    "description": "A creamy mushroom risotto made with saut&#xE9;ed mushrooms and Parmesan cheese.",
+    "ingredients": "1 cup Arborio rice\\n200g mushrooms\\n1/2 cup Parmesan cheese\\n1/4 cup white wine\\n4 cups chicken broth\\nSalt and pepper\\n1 tablespoon butter",
+    "directions": "In a large pan, saut&#xE9; mushrooms in butter. Add Arborio rice and stir to coat. Add white wine and cook until absorbed. Gradually add chicken broth, one ladle at a time, stirring constantly. Once the rice is cooked, stir in Parmesan cheese. Season with salt and pepper. Serve hot.",
+    "image": "3.601028c2554ac.2665aa38d9af.webp",
+    "rating": "8.17"
+  },
+  {
+    "id": "2cf9f3ee-139e-455a-bbbe-17b58e50d6e9",
+    "name": "Grilled Cheese Sandwich",
+    "slug": "grilled-cheese-sandwich",
+    "createdAt": "2024-09-29T07:30:32.674Z",
+    "description": "A classic grilled cheese sandwich made with American cheese and buttered bread.",
+    "ingredients": "2 slices bread\\\\n2 slices American cheese\\\\n2 tablespoons butter",
+    "directions": "Heat a skillet over medium heat. Butter one side of each bread slice. Place one slice of bread, buttered side down, in the skillet. Add cheese, then top with the second slice of bread, buttered side up. Cook until golden and cheese is melted, about 3 minutes per side.",
+    "image": "3.712946e90de1a.4d83db1c67c3.webp",
+    "rating": "9.80"
+  },
+  {
+    "id": "25f81ab6-ae37-413b-a254-5893ea763cf2",
+    "name": "Apple Pie",
+    "slug": "apple-pie",
+    "createdAt": "2024-09-29T08:05:35.554Z",
+    "description": "A classic apple pie with a golden brown lattice crust and spiced apple filling, served with vanilla ice cream.",
+    "ingredients": "5 apples\\n1/2 cup sugar\\n1 teaspoon cinnamon\\n1/4 teaspoon nutmeg\\n1 pie crust\\n1 scoop vanilla ice cream",
+    "directions": "Peel and slice apples. Mix with sugar, cinnamon, and nutmeg. Place in a pie crust and top with lattice crust. Bake at 350&#xB0;F for 45 minutes until golden. Serve with a scoop of vanilla ice cream.",
+    "image": "a.c013764304ed9.f9cfbc997c5d.webp",
+    "rating": "9.35"
+  },
+  {
+    "id": "2e984be3-eb29-4eca-b3a6-9f118ed45ae0",
+    "name": "Fried Pork Chop",
+    "slug": "fried-pork-chop",
+    "createdAt": "2024-09-29T07:54:35.859Z",
+    "description": "These fried pork chops are so good you&#x26;#x27;ll say they taste like heaven!",
+    "ingredients": "1 cup vegetable oil for frying\\n\\n&#x26;#xBD; cup all-purpose flour\\n\\n&#x26;#xBD; teaspoon seasoning salt, or to taste\\n\\nsalt and pepper to taste\\n\\n4 (3/4 inch) thick pork chops",
+    "directions": "Heat oil in a large skillet over medium-high heat.\\r\\nCombine flour, seasoning salt, salt, and pepper in a paper or plastic bag.\\r\\nPlace pork chops in the bag and shake to coat. Shake off any excess flour.\\r\\nFry chops in hot oil until golden on the outside and juices run clear, 4 to 5 minutes per side.\\r\\nDrain on a wire rack or paper towels before serving.\\r\\nServe hot and enjoy!",
+    "image": "d.5b24c76f12eaa.5a1dc89b962d.webp",
+    "rating": null
+  },
+  {
+    "id": "0466168a-f9f6-4241-b08c-b1a4d447be1b",
+    "name": "Chicken Fajitas",
+    "slug": "chicken-fajitas",
+    "createdAt": "2024-09-29T07:58:10.698Z",
+    "description": "Grilled chicken strips with saut&#xE9;ed bell peppers and onions, served with warm tortillas.",
+    "ingredients": "2 chicken breasts\\n1 red bell pepper\\n1 green bell pepper\\n1 onion\\n2 tablespoons olive oil\\nTortillas\\nLime wedges\\nCilantro",
+    "directions": "Slice chicken breasts, bell peppers, and onions into strips. In a large pan, heat olive oil and saut&#xE9; the chicken until cooked through. Add the bell peppers and onions and cook until tender. Serve the mixture with warm tortillas, lime wedges, and cilantro.",
+    "image": "4.8038578c94eac.6dd3e997148c.webp",
+    "rating": null
+  },
+  {
+    "id": "6c2ae810-a93c-4bfb-908b-a6ecd45ff87b",
+    "name": "Creamy Tomato Soup",
+    "slug": "creamy-tomato-soup",
+    "createdAt": "2024-09-29T08:03:16.553Z",
+    "description": "A rich and creamy tomato soup, topped with a drizzle of cream and fresh basil leaves.",
+    "ingredients": "1 can crushed tomatoes\\n1/2 cup heavy cream\\n1 onion\\n2 cloves garlic\\n1 tablespoon olive oil\\nFresh basil\\nSalt and pepper",
+    "directions": "In a pot, saut&#xE9; chopped onions and garlic in olive oil. Add crushed tomatoes and simmer for 15 minutes. Blend the soup until smooth, then stir in heavy cream. Season with salt and pepper. Serve with fresh basil leaves and a drizzle of cream.",
+    "image": "4.d9b37868b967f.e3a2eeaf8c48.webp",
+    "rating": null
+  },
+  {
+    "id": "49516de8-f073-4a4a-9727-e18f29bb77c8",
+    "name": "Chicken Parmesan",
+    "slug": "chicken-parmesan",
+    "createdAt": "2024-09-29T08:04:30.499Z",
+    "description": "A golden breaded chicken cutlet topped with marinara sauce and melted mozzarella cheese, served with spaghetti marinara.",
+    "ingredients": "2 chicken breasts\\n1 cup marinara sauce\\n1 cup mozzarella cheese\\n1/2 cup breadcrumbs\\nSpaghetti\\nFresh basil",
+    "directions": "Bread and fry chicken breasts until golden. Top with marinara sauce and mozzarella cheese, then bake until cheese is melted. Serve with cooked spaghetti and garnish with fresh basil.",
+    "image": "c.94f0cf5dc98ed.75613c04654a.webp",
+    "rating": null
+  },
+  {
+    "id": "198fbb88-28de-4b04-ac5c-b09d3c8eb019",
+    "name": "Chicken Noodle Soup",
+    "slug": "chicken-noodle-soup",
+    "createdAt": "2024-09-29T08:06:18.508Z",
+    "description": "A comforting bowl of chicken noodle soup with tender chicken, noodles, and vegetables in a clear broth.",
+    "ingredients": "2 chicken breasts\\n2 carrots\\n2 celery stalks\\n1 onion\\n4 cups chicken broth\\n1 cup noodles\\nSalt and pepper\\nFresh parsley",
+    "directions": "In a pot, cook chicken breasts in chicken broth until done. Remove and shred. Add chopped vegetables and noodles to the broth and cook until tender. Return chicken to the pot, season with salt and pepper, and garnish with fresh parsley.",
+    "image": "7.ade5e928717af.a3a0c3ef1b7b.webp",
+    "rating": "8.30"
+  },
+  {
+    "id": "de0a0ab5-9776-49b0-8b65-5fd80a0b0c9f",
+    "name": "Blueberry Pancakes",
+    "slug": "blueberry-pancakes",
+    "createdAt": "2024-09-29T08:06:42.228Z",
+    "description": "Fluffy blueberry pancakes topped with butter and maple syrup, served with fresh blueberries.",
+    "ingredients": "1 cup flour\\n1 tablespoon sugar\\n1 teaspoon baking powder\\n1/2 teaspoon salt\\n1 cup milk\\n1 egg\\n1/2 cup blueberries\\nButter\\nMaple syrup",
+    "directions": "In a bowl, mix flour, sugar, baking powder, and salt. In another bowl, whisk together milk and egg. Combine wet and dry ingredients, then fold in blueberries. Cook pancakes on a griddle until golden. Serve with butter and maple syrup.",
+    "image": "2.b51fb576bd366.9b02771b7714.webp",
+    "rating": "9.21"
+  },
+  {
+    "id": "4743d72d-8c1a-4d5a-97de-99e79d965de3",
+    "name": "Spaghetti Carbonara",
+    "slug": "spaghetti-carbonara",
+    "createdAt": "2024-09-29T07:19:44.052Z",
+    "description": "Creamy carbonara made with eggs, cheese, pancetta, and pepper.",
+    "ingredients": "400g spaghetti\\\\n200g pancetta\\\\n2 eggs\\\\n50g Parmesan cheese\\\\nSalt and pepper",
+    "directions": "Cook spaghetti according to package instructions. In a pan, fry pancetta until crispy. Beat eggs and mix with grated Parmesan cheese. Drain spaghetti and toss with pancetta, eggs, and cheese. Season with salt and pepper. Serve immediately.",
+    "image": "8.b0c8ad1c64b90.313d387932b2.webp",
+    "rating": "9.33"
+  }
+]

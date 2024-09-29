@@ -10,6 +10,8 @@ import { ContextInterceptor } from './common/interceptors/context/context.interc
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // await CommandFactory.createWithoutRunning(AppModule, new Logger());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -1,3 +1,4 @@
+import { ApiHideProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -13,6 +14,7 @@ export class Rating {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiHideProperty()
   @ManyToOne(() => Recipe, (recipe) => recipe.ratings, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'recipe_id' })
   recipe: Recipe;
