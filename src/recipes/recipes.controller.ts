@@ -215,11 +215,13 @@ export class RecipesController {
   async remove(@Param() { id }: FindOneParamsDto): Promise<void> {
     const recipe = await this.recipesService.findOne(id);
 
-    const imagePath = join(__dirname, '..', '..', 'uploads', recipe.image);
-    try {
-      unlinkSync(imagePath);
-    } catch (error) {
-      console.warn('Error deleting image:', error.message);
+    if (recipe.image) {
+      const imagePath = join(__dirname, '..', '..', 'uploads', recipe.image);
+      try {
+        unlinkSync(imagePath);
+      } catch (error) {
+        console.warn('Error deleting image:', error.message);
+      }
     }
 
     this.recipesService.remove(id);

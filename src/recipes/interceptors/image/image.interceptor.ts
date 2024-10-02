@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Recipe } from '../../entities/recipe.entity';
 
 @Injectable()
 export class ImageInterceptor implements NestInterceptor {
@@ -16,24 +17,31 @@ export class ImageInterceptor implements NestInterceptor {
           return data;
         }
 
-        if (data.hasOwnProperty('image') && data.image) {
+        if (data instanceof Recipe && data.image) {
           data.image = `http://localhost:3000/uploads/${data.image}`;
         }
 
-        if (Array.isArray(data)) {
+        if (
+          Array.isArray(data) &&
+          data.every((item) => item instanceof Recipe)
+        ) {
           return data.map((item) => {
-            if (item.hasOwnProperty('image') && item.image) {
+            if (item.image) {
               item.image = `http://localhost:3000/uploads/${item.image}`;
             }
             return item;
           });
         }
 
-        if (data.hasOwnProperty('data') && Array.isArray(data.data)) {
+        if (
+          data.hasOwnProperty('data') &&
+          Array.isArray(data.data) &&
+          data.data.every((item) => item instanceof Recipe)
+        ) {
           return {
             ...data,
             data: data.data.map((item) => {
-              if (item.hasOwnProperty('image') && item.image) {
+              if (item.image) {
                 item.image = `http://localhost:3000/uploads/${item.image}`;
               }
               return item;
