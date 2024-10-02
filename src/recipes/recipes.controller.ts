@@ -24,6 +24,9 @@ import {
 import { unlinkSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { CommentsService } from '../comments/comments.service';
+import { CreateCommentDto } from '../comments/dto/create-comment.dto';
+import { CommentTransformInterceptor } from '../comments/interceptors/comment-transform/comment-transform.interceptor';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { CreateRatingDto } from '../ratings/dto/create-rating.dto';
 import { Rating } from '../ratings/entities/rating.entity';
@@ -44,6 +47,7 @@ export class RecipesController {
   constructor(
     private readonly recipesService: RecipesService,
     private readonly ratingsService: RatingsService,
+    private readonly commentsService: CommentsService,
   ) {}
 
   @Post()
@@ -96,7 +100,7 @@ export class RecipesController {
   @ApiBadRequestResponse({
     description: 'Bad request.',
   })
-  async rateRecipe(
+  async createRating(
     @Param() { id }: FindOneParamsDto,
     @Body() createRatingDto: CreateRatingDto,
   ): Promise<Recipe> {
@@ -219,5 +223,23 @@ export class RecipesController {
     }
 
     this.recipesService.remove(id);
+  }
+
+  @Post(':id/comments')
+  @UseInterceptors(CommentTransformInterceptor)
+  async createComment(
+    @Param() { id }: FindOneParamsDto,
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    const recipe = await this.recipesService.findOne(id);
+
+    return this.commentsService.create(recipe, createCommentDto);
+  }
+
+  @Get(':id/comments')
+  async getRecipeComments(@Param() { id }: FindOneParamsDto) {
+    const recipe = await this.recipesService.findOne(id);
+
+    return this.commentsService.findByRecipe(recipe);
   }
 }

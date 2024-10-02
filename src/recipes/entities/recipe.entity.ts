@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Comment } from '../../comments/entities/comment.entity';
 import { Rating } from '../../ratings/entities/rating.entity';
 
 @Entity('recipes')
@@ -45,4 +46,8 @@ export class Recipe {
   @ApiHideProperty()
   @OneToMany(() => Rating, (rating) => rating.recipe)
   ratings: Rating[];
+
+  @ApiHideProperty()
+  @OneToMany(() => Comment, (comment) => comment.recipe)
+  comments: Comment[];
 }

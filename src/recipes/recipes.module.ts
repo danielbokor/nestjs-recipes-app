@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommentsModule } from '../comments/comments.module';
 import { CommonModule } from '../common/common.module';
 import { RecipesDataExportService } from '../data-export/recipes-data-export/recipes-data-export.service';
 import { RecipesDataImportService } from '../data-import/recipes-data-import/recipes-data-import.service';
@@ -16,6 +17,7 @@ import { IsSlugUniqueConstraint } from './validators/is-slug-unique.validator';
     TypeOrmModule.forFeature([Recipe, Rating]),
     forwardRef(() => CommonModule),
     forwardRef(() => RatingsModule),
+    forwardRef(() => CommentsModule),
   ],
   controllers: [RecipesController],
   providers: [

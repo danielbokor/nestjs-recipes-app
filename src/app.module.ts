@@ -7,6 +7,8 @@ import { join } from 'path';
 import { ExportRatingsCommand } from './commands/export-ratings-command/export-ratings-command';
 import { ExportRecipesCommand } from './commands/export-recipes-command/export-recipes-command';
 import { SeedDataCommand } from './commands/seed-data-command/seed-data-command';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entities/comment.entity';
 import { CommonModule } from './common/common.module';
 import { RatingsDataImportService } from './data-import/ratings-data-import/ratings-data-import.service';
 import { Rating } from './ratings/entities/rating.entity';
@@ -33,7 +35,7 @@ import { RecipesModule } from './recipes/recipes.module';
         username: configService.get<string>('DATABASE_USER'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [Recipe, Rating],
+        entities: [Recipe, Rating, Comment],
         synchronize: true, // Ensure this is set to false for migrations
         // migrations: [__dirname + '/../migrations/*.{ts,js}'],
       }),
@@ -43,6 +45,7 @@ import { RecipesModule } from './recipes/recipes.module';
     forwardRef(() => RecipesModule),
     forwardRef(() => CommonModule),
     forwardRef(() => RatingsModule),
+    forwardRef(() => CommentsModule),
   ],
   controllers: [],
   providers: [
