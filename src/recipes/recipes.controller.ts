@@ -5,7 +5,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Logger,
   Param,
   Post,
   Put,
@@ -46,8 +45,6 @@ import { RecipesService } from './recipes.service';
 @UseInterceptors(DecodeInterceptor)
 @UseInterceptors(ImageInterceptor)
 export class RecipesController {
-  private readonly logger = new Logger();
-
   constructor(
     private readonly recipesService: RecipesService,
     private readonly ratingsService: RatingsService,
@@ -99,7 +96,6 @@ export class RecipesController {
 
   @Get()
   async findAll(@Query() { limit, page, query }: PaginationDto & QueryDto) {
-    this.logger.log('fetching all recipes');
     return this.recipesService.findAll({ page, limit, query });
   }
 
@@ -108,7 +104,6 @@ export class RecipesController {
     description: 'Recipe not found.',
   })
   async findOne(@Param() { id }: FindOneParamsDto): Promise<Recipe> {
-    this.logger.log('fetching recipe id ', id);
     return this.recipesService.findOne(id);
   }
 
