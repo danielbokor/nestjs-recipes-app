@@ -4,12 +4,16 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommandRunnerModule } from 'nest-commander';
 import { join } from 'path';
+import { ExportCommentsCommand } from './commands/export-comments-command/export-comments-command';
 import { ExportRatingsCommand } from './commands/export-ratings-command/export-ratings-command';
 import { ExportRecipesCommand } from './commands/export-recipes-command/export-recipes-command';
+import { SeedCommentsCommand } from './commands/seed-comments-command/seed-comments-command';
 import { SeedDataCommand } from './commands/seed-data-command/seed-data-command';
 import { CommentsModule } from './comments/comments.module';
 import { Comment } from './comments/entities/comment.entity';
 import { CommonModule } from './common/common.module';
+import { CommentsDataExportService } from './data-export/comments-data-export/comments-data-export.service';
+import { CommentsDataImportService } from './data-import/comments-data-import/comments-data-import.service';
 import { RatingsDataImportService } from './data-import/ratings-data-import/ratings-data-import.service';
 import { Rating } from './ratings/entities/rating.entity';
 import { RatingsModule } from './ratings/ratings.module';
@@ -41,7 +45,7 @@ import { RecipesModule } from './recipes/recipes.module';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Rating, Recipe]),
+    TypeOrmModule.forFeature([Rating, Recipe, Comment]),
     forwardRef(() => RecipesModule),
     forwardRef(() => CommonModule),
     forwardRef(() => RatingsModule),
@@ -51,8 +55,12 @@ import { RecipesModule } from './recipes/recipes.module';
   providers: [
     ExportRatingsCommand,
     ExportRecipesCommand,
+    ExportCommentsCommand,
     SeedDataCommand,
+    SeedCommentsCommand,
     RatingsDataImportService,
+    CommentsDataExportService,
+    CommentsDataImportService,
   ],
 })
 export class AppModule {}

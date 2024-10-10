@@ -1,4 +1,5 @@
 import { Command, CommandRunner } from 'nest-commander';
+import { CommentsDataImportService } from '../../data-import/comments-data-import/comments-data-import.service';
 import { RatingsDataImportService } from '../../data-import/ratings-data-import/ratings-data-import.service';
 import { RecipesDataImportService } from '../../data-import/recipes-data-import/recipes-data-import.service';
 
@@ -10,6 +11,7 @@ export class SeedDataCommand extends CommandRunner {
   constructor(
     private readonly recipesDataImportService: RecipesDataImportService,
     private readonly ratingsDataImportService: RatingsDataImportService,
+    private readonly commentsDataImportService: CommentsDataImportService,
   ) {
     super();
   }
@@ -18,6 +20,7 @@ export class SeedDataCommand extends CommandRunner {
     console.log('Starting seed command...');
     await this.recipesDataImportService.import();
     await this.ratingsDataImportService.import();
+    await this.commentsDataImportService.import();
     console.log('Data has been seeded.');
   }
 }

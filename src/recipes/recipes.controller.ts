@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Param,
   Post,
   Put,
@@ -28,6 +29,7 @@ import { CommentsService } from '../comments/comments.service';
 import { CreateCommentDto } from '../comments/dto/create-comment.dto';
 import { CommentTransformInterceptor } from '../comments/interceptors/comment-transform/comment-transform.interceptor';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { QueryDto } from '../common/dto/query.dto';
 import { CreateRatingDto } from '../ratings/dto/create-rating.dto';
 import { Rating } from '../ratings/entities/rating.entity';
 import { RatingsService } from '../ratings/ratings.service';
@@ -44,6 +46,8 @@ import { RecipesService } from './recipes.service';
 @UseInterceptors(DecodeInterceptor)
 @UseInterceptors(ImageInterceptor)
 export class RecipesController {
+  private readonly logger = new Logger();
+
   constructor(
     private readonly recipesService: RecipesService,
     private readonly ratingsService: RatingsService,
@@ -93,38 +97,10 @@ export class RecipesController {
     return this.recipesService.create(createRecipeDto, imageFilename);
   }
 
-  @Post(':id/ratings')
-  @ApiNotFoundResponse({
-    description: 'Recipe not found.',
-  })
-  @ApiBadRequestResponse({
-    description: 'Bad request.',
-  })
-  async createRating(
-    @Param() { id }: FindOneParamsDto,
-    @Body() createRatingDto: CreateRatingDto,
-  ): Promise<Recipe> {
-    const recipe = await this.recipesService.findOne(id);
-
-    await this.ratingsService.create(recipe, createRatingDto);
-    const ratings = await this.ratingsService.findByRecipe(recipe);
-
-    return this.recipesService.calculateRatings(id, ratings);
-  }
-
-  @Get(':id/ratings')
-  @ApiNotFoundResponse({
-    description: 'Recipe not found.',
-  })
-  async getRecipeRatings(@Param() { id }: FindOneParamsDto): Promise<Rating[]> {
-    const recipe = await this.recipesService.findOne(id);
-
-    return this.ratingsService.findByRecipe(recipe);
-  }
-
   @Get()
-  async findAll(@Query() { limit, page }: PaginationDto) {
-    return this.recipesService.findAll(page, limit);
+  async findAll(@Query() { limit, page, query }: PaginationDto & QueryDto) {
+    this.logger.log('fetching all recipes');
+    return this.recipesService.findAll({ page, limit, query });
   }
 
   @Get(':id')
@@ -132,6 +108,7 @@ export class RecipesController {
     description: 'Recipe not found.',
   })
   async findOne(@Param() { id }: FindOneParamsDto): Promise<Recipe> {
+    this.logger.log('fetching recipe id ', id);
     return this.recipesService.findOne(id);
   }
 
@@ -227,6 +204,40 @@ export class RecipesController {
     this.recipesService.remove(id);
   }
 
+  @Post(':id/ratings')
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
+  async createRating(
+    @Param() { id }: FindOneParamsDto,
+    @Body() createRatingDto: CreateRatingDto,
+  ): Promise<Recipe> {
+    const recipe = await this.recipesService.findOne(id);
+
+    await this.ratingsService.create(recipe, createRatingDto);
+    const ratings = await this.ratingsService.findByRecipe(recipe);
+
+    return this.recipesService.calculateRatings(id, ratings);
+  }
+
+  @Get(':id/ratings')
+  @ApiNotFoundResponse({
+    description: 'Recipe not found.',
+  })
+  async getRecipeRatings(@Param() { id }: FindOneParamsDto): Promise<Rating[]> {
+    const recipe = await this.recipesService.findOne(id);
+
+    return this.ratingsService.findByRecipe(recipe);
+  }
+
+  @Get(':id/rating')
+  async getRating(@Param() { id }: FindOneParamsDto) {
+    return this.recipesService.getRating(id);
+  }
+
   @Post(':id/comments')
   @UseInterceptors(CommentTransformInterceptor)
   async createComment(
@@ -241,7 +252,6 @@ export class RecipesController {
   @Get(':id/comments')
   async getRecipeComments(@Param() { id }: FindOneParamsDto) {
     const recipe = await this.recipesService.findOne(id);
-
     return this.commentsService.findByRecipe(recipe);
   }
 }

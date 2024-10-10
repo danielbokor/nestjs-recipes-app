@@ -1,0 +1,23 @@
+[
+  {
+    "id": "97173faa-7bc3-46a0-8ad7-15c8a216a0e7",
+    "name": "Daniel Bokor",
+    "email": "daniel.bokor@accesa.eu",
+    "createdAt": "2024-10-02T05:47:28.961Z",
+    "comment": "I had better salads!"
+  },
+  {
+    "id": "ad5d12f3-d7c5-42fc-a7da-8d2b2b0c0821",
+    "name": "Daniel Bokor",
+    "email": "daniel.bokor@accesa.eu",
+    "createdAt": "2024-10-06T09:28:44.262Z",
+    "comment": "On a second thought, it was quite delicious!"
+  },
+  {
+    "id": "06c0a4af-9205-4020-b67f-c2b2066d2c58",
+    "name": "Daniel Bokor",
+    "email": "daniel.bokor@accesa.eu",
+    "createdAt": "2024-10-06T15:06:15.456Z",
+    "comment": "On a third thought, it was meh."
+  }
+]

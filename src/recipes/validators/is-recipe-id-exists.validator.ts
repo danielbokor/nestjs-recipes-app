@@ -24,7 +24,7 @@ export class IsRecipeIdExistsConstraint
 
       return true;
     } catch (e) {
-      throw new NotFoundException('Recipe not found');
+      throw new NotFoundException(`Recipe not found ${id}`);
     }
   }
 }

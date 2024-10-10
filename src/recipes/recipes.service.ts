@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Rating } from '../ratings/entities/rating.entity';
 import { RatingsService } from '../ratings/ratings.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -29,21 +29,23 @@ export class RecipesService {
     return this.recipeRepository.save(recipe);
   }
 
-  async findAll(
-    page?: number,
-    limit?: number,
-  ): Promise<
+  async findAll({
+    page,
+    limit,
+    query,
+  }: {
+    page?: number;
+    limit?: number;
+    query?: string;
+  }): Promise<
     Recipe[] | { data: Recipe[]; total: number; page: number; limit: number }
   > {
-    if (!page || !limit) {
-      return this.recipeRepository.find();
-    }
-
     const offset = (page - 1) * limit;
 
     const [recipes, total] = await this.recipeRepository.findAndCount({
-      skip: offset,
-      take: limit,
+      skip: page ? offset : null,
+      take: limit || null,
+      where: query ? { name: ILike(`%${query}%`) } : {},
     });
 
     return {
@@ -94,5 +96,9 @@ export class RecipesService {
     });
 
     return this.findOne(id);
+  }
+
+  async getRating(id: string) {
+    return this.recipeRepository.findOne({ where: { id }, select: ['rating'] });
   }
 }
