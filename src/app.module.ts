@@ -51,10 +51,9 @@ import { RecipesModule } from './recipes/recipes.module';
         database: configService.get<string>('DATABASE_NAME'),
         entities: [Recipe, Rating, Comment],
         synchronize: true, // Ensure this is set to false for migrations
-        ssl:
-          process.env.NODE_ENV === 'production'
-            ? { rejectUnauthorized: false }
-            : false,
+        ssl: configService.get<string>('DATABASE_SSL')
+          ? { rejectUnauthorized: false }
+          : false,
         // migrations: [__dirname + '/../migrations/*.{ts,js}'],
       }),
       inject: [ConfigService],
