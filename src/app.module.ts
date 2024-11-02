@@ -25,6 +25,16 @@ import { RecipesModule } from './recipes/recipes.module';
     CommandRunnerModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [
+        '.env.production.local',
+        '.env.development.local',
+        '.env.test.local',
+        '.env.local',
+        '.env.production',
+        '.env.development',
+        '.env.test',
+        '.env',
+      ],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
@@ -41,6 +51,10 @@ import { RecipesModule } from './recipes/recipes.module';
         database: configService.get<string>('DATABASE_NAME'),
         entities: [Recipe, Rating, Comment],
         synchronize: true, // Ensure this is set to false for migrations
+        ssl:
+          process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
         // migrations: [__dirname + '/../migrations/*.{ts,js}'],
       }),
       inject: [ConfigService],
