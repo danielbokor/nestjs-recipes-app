@@ -4,20 +4,23 @@
     "name": "Daniel Bokor",
     "email": "daniel.bokor@accesa.eu",
     "createdAt": "2024-10-02T05:47:28.961Z",
-    "comment": "I had better salads!"
+    "comment": "I had better salads!",
+    "recipe_id": "9309c3ed-9498-4227-9cf5-9e4731378c2a"
   },
   {
     "id": "ad5d12f3-d7c5-42fc-a7da-8d2b2b0c0821",
     "name": "Daniel Bokor",
     "email": "daniel.bokor@accesa.eu",
     "createdAt": "2024-10-06T09:28:44.262Z",
-    "comment": "On a second thought, it was quite delicious!"
+    "comment": "On a second thought, it was quite delicious!",
+    "recipe_id": "9309c3ed-9498-4227-9cf5-9e4731378c2a"
   },
   {
     "id": "06c0a4af-9205-4020-b67f-c2b2066d2c58",
     "name": "Daniel Bokor",
     "email": "daniel.bokor@accesa.eu",
     "createdAt": "2024-10-06T15:06:15.456Z",
-    "comment": "On a third thought, it was meh."
+    "comment": "On a third thought, it was meh.",
+    "recipe_id": "9309c3ed-9498-4227-9cf5-9e4731378c2a"
   }
 ]
