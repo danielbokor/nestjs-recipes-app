@@ -4,6 +4,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommandRunnerModule } from 'nest-commander';
 import { join } from 'path';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { ExportCommentsCommand } from './commands/export-comments-command/export-comments-command';
 import { ExportRatingsCommand } from './commands/export-ratings-command/export-ratings-command';
 import { ExportRecipesCommand } from './commands/export-recipes-command/export-recipes-command';
@@ -64,7 +66,7 @@ import { RecipesModule } from './recipes/recipes.module';
     forwardRef(() => RatingsModule),
     forwardRef(() => CommentsModule),
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     ExportRatingsCommand,
     ExportRecipesCommand,
@@ -74,6 +76,7 @@ import { RecipesModule } from './recipes/recipes.module';
     RatingsDataImportService,
     CommentsDataExportService,
     CommentsDataImportService,
+    AppService,
   ],
 })
 export class AppModule {}
