@@ -11,6 +11,9 @@ import { Recipe } from '../../entities/recipe.entity';
 @Injectable()
 export class ImageInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const req = context.switchToHttp().getRequest();
+    const hostname = `${req.protocol}://${req.get('Host')}`;
+
     return next.handle().pipe(
       map((data) => {
         if (!data) {
@@ -18,7 +21,7 @@ export class ImageInterceptor implements NestInterceptor {
         }
 
         if (data instanceof Recipe && data.image) {
-          data.image = `http://localhost:3000/uploads/${data.image}`;
+          data.image = `${hostname}/uploads/${data.image}`;
         }
 
         if (
@@ -27,7 +30,7 @@ export class ImageInterceptor implements NestInterceptor {
         ) {
           return data.map((item) => {
             if (item.image) {
-              item.image = `http://localhost:3000/uploads/${item.image}`;
+              item.image = `${hostname}/uploads/${item.image}`;
             }
             return item;
           });
@@ -42,7 +45,7 @@ export class ImageInterceptor implements NestInterceptor {
             ...data,
             data: data.data.map((item) => {
               if (item.image) {
-                item.image = `http://localhost:3000/uploads/${item.image}`;
+                item.image = `${hostname}/uploads/${item.image}`;
               }
               return item;
             }),
